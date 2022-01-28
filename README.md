@@ -1,2 +1,3 @@
 # KBase
-KBase is a distributed database learn from OceanBase
+
+KBase is a distributed kv learn from etcd.
