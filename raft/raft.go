@@ -139,3 +139,7 @@ func (r *raft) resetRandomizedElectionTimeout() {
 func (r *raft) send(m pb.Message) {
 	r.msgs = append(r.msgs, m)
 }
+
+func (r *raft) Step(msg pb.Message) error {
+	return nil
+}
