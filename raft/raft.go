@@ -141,5 +141,31 @@ func (r *raft) send(m pb.Message) {
 }
 
 func (r *raft) Step(msg pb.Message) error {
+	switch {
+	case msg.Term == 0:
+		// local message.
+	case msg.Term > r.Term:
+		if msg.Type == pb.MsgVote || msg.Type == pb.MsgPreVote {
+			return nil
+		}
+		switch {
+		case msg.Type == pb.MsgPreVote:
+		case msg.Type == pb.MsgPreVoteResp:
+		default:
+			// TODO log
+			if msg.Type == pb.MsgApp || msg.Type == pb.MsgHeartBeat || msg.Type == pb.MsgSnap {
+				r.becomeFollower(msg.Term, msg.From)
+			} else {
+				r.becomeFollower(msg.Term, None)
+			}
+
+		}
+	case msg.Term < r.Term:
+	}
+
+	switch msg.Type {
+	case pb.MsgHup:
+	default:
+	}
 	return nil
 }
